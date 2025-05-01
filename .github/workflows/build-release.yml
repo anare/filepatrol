@@ -38,6 +38,8 @@ jobs:
           go-version: '1.23'
 
       - name: Build binary using Makefile
+        env:
+          CGO_ENABLED: 1
         run: |
           case "${{ matrix.folder }}" in
             linux)
