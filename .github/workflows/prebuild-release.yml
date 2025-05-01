@@ -1,9 +1,17 @@
 name: Upload Prebuilt Artifacts as Release
 
+# Disable the workflow for now
+#on:
+#  push:
+#    tags:
+#      - 'v*'  # Matches tags like v1.0.0, v2.3.4, etc.
+
+# Manually trigger the workflow
 on:
-  push:
-    tags:
-      - 'v*'  # Matches tags like v1.0.0, v2.3.4, etc.
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   release:
