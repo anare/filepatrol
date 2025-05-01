@@ -1,0 +1,64 @@
+name: Release FilePatrol
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - runner: ubuntu-latest
+            folder: linux
+            zipname: release/filepatrol-linux-amd64.zip
+
+          - runner: ubuntu-latest
+            folder: win32
+            zipname: release/filepatrol-win32.zip
+
+          - runner: ubuntu-latest
+            folder: windows
+            zipname: release/filepatrol-windows-amd64.zip
+
+          - runner: macos-latest
+            folder: mac
+            zipname: release/filepatrol-macos-amd64.zip
+
+    runs-on: ${{ matrix.runner }}
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: Build binary using Makefile
+        run: |
+          case "${{ matrix.folder }}" in
+            linux)
+              make build-linux
+              ;;
+            win32|windows)
+              make build-windows-all
+              ;;
+            mac)
+              make build-mac
+              ;;
+          esac
+
+      - name: Package ZIP
+        run: |
+          cd runtime/${{ matrix.folder }}
+          zip -r ../../${{ matrix.zipname }} .
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: runtime/${{ matrix.zipname }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

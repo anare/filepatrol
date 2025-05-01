@@ -1,0 +1,23 @@
+[
+  {
+    "id": "local_mac_watcher_1",
+    "watch_dir": "./watched",
+    "file_template": "*.txt",
+    "post_url": "http://localhost:8080/upload",
+    "plugin_path": "./plugins/local_folder.so",
+    "processor_plugin_path": "./plugins/processor.so",
+    "post_plugin_path": "./plugins/post.so",
+    "processed_dir": "./processed",
+    "auth": {
+      "jwt": {
+        "cache": "cache/{id}.cache",
+        "plugin_path": "./plugins/jwt.so",
+        "url": "http://localhost:8080/login",
+        "body_template": "{\"username\":\"{username}\",\"password\":\"{password}\"}",
+        "username": "admin",
+        "password": "password",
+        "token_jsonfield": "access_token"
+      }
+    }
+  }
+]
