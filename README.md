@@ -62,21 +62,25 @@ make clean
 ```json
 [
   {
-    "id": "local_watcher_1",
-    "watchDir": "./watched",
-    "fileTemplate": "*.txt",
-    "postURL": "http://localhost:8080/upload",
-    "pluginPath": "./runtime/plugins/linux/local_folder.so",
-    "processorPluginPath": "./runtime/plugins/linux/processor.so",
-    "postPluginPath": "./runtime/plugins/linux/post.so",
-    "authPluginPath": "./runtime/plugins/linux/jwt.so",
-    "jwtToken": "",
-    "authURL": "http://localhost:8080/auth/login",
-    "authBodyTemplate": "{\"username\":\"{username}\",\"password\":\"{password}\"}",
-    "authUsername": "admin",
-    "authPassword": "secret",
-    "authTokenJSONField": "access_token",
-    "processedDir": "./processed"
+    "id": "local_mac_watcher_1",
+    "watch_dir": "./watched",
+    "file_template": "*.txt",
+    "post_url": "http://localhost:8080/upload",
+    "plugin_path": "./plugins/local_folder.so",
+    "processor_plugin_path": "./plugins/processor.so",
+    "post_plugin_path": "./plugins/post.so",
+    "processed_dir": "./processed",
+    "auth": {
+      "jwt": {
+        "cache": "cache/{id}.cache",
+        "plugin_path": "./plugins/jwt.so",
+        "url": "http://localhost:8080/login",
+        "body_template": "{\"username\":\"{username}\",\"password\":\"{password}\"}",
+        "username": "admin",
+        "password": "password",
+        "token_jsonfield": "access_token"
+      }
+    }
   }
 ]
 ```
